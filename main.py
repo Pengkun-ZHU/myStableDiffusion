@@ -13,12 +13,12 @@ from huggingface_hub import hf_hub_download
 dev = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Load variational autoencoder ( measured by KL entropy ) model
-vae = diffusers.AutoencoderKL.from_pretrained( "/Users/pengkunzhu/.cache/huggingface/CompVis/stable-diffusion-v1-4",
+vae = diffusers.AutoencoderKL.from_pretrained( "CompVis/stable-diffusion-v1-4",
                                                subfolder="vae",
                                                local_files_only=True )
 
 # UNet for generating latent space
-unet = diffusers.UNet2DConditionModel.from_pretrained( "/Users/pengkunzhu/.cache/huggingface/CompVis/stable-diffusion-v1-4",
+unet = diffusers.UNet2DConditionModel.from_pretrained( "CompVis/stable-diffusion-v1-4",
                                                        subfolder="unet",
                                                        local_files_only=True )
 
@@ -27,8 +27,8 @@ unet = diffusers.UNet2DConditionModel.from_pretrained( "/Users/pengkunzhu/.cache
 scheduler = diffusers.LMSDiscreteScheduler( beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear",
                                             num_train_timesteps=1000 )
 
-textTokenizer = transformers.CLIPTokenizer.from_pretrained( "/Users/pengkunzhu/.cache/huggingface/openai/clip-vit-large-patch14" )
-textEncoder = transformers.CLIPTextModel.from_pretrained( "/Users/pengkunzhu/.cache/huggingface/openai/clip-vit-large-patch14" )
+textTokenizer = transformers.CLIPTokenizer.from_pretrained( "openai/clip-vit-large-patch14" )
+textEncoder = transformers.CLIPTextModel.from_pretrained( "openai/clip-vit-large-patch14" )
 
 vae = vae.to( dev )
 unet = unet.to( dev )
