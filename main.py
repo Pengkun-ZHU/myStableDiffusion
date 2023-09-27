@@ -13,14 +13,10 @@ from huggingface_hub import hf_hub_download
 dev = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Load variational autoencoder ( measured by KL entropy ) model
-vae = diffusers.AutoencoderKL.from_pretrained( "CompVis/stable-diffusion-v1-4",
-                                               subfolder="vae",
-                                               local_files_only=True )
+vae = diffusers.AutoencoderKL.from_pretrained( "CompVis/stable-diffusion-v1-4" )
 
 # UNet for generating latent space
-unet = diffusers.UNet2DConditionModel.from_pretrained( "CompVis/stable-diffusion-v1-4",
-                                                       subfolder="unet",
-                                                       local_files_only=True )
+unet = diffusers.UNet2DConditionModel.from_pretrained( "CompVis/stable-diffusion-v1-4" )
 
 # Scheduler guiding what step to take when adding noise. See the link below for details on each parameter
 # https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#quick-summary
