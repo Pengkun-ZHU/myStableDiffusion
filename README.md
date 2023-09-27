@@ -1,7 +1,7 @@
 # myStableDiffusion
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) \
 Introducing stable diffusion with prompt applied!!! \
-Feel free to modify and try various prompts to guide your image generation, powered by CLIP by openai's pretrained model clip-vit-large-patch14.
+Feel free to modify and try various prompts to guide your image generation, powered by openai's pretrained CLIP model clip-vit-large-patch14.
 
 **Reference**
 -----
