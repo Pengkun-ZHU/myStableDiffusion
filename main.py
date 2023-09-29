@@ -88,4 +88,7 @@ with torch.autocast( dev ):
     image = image.detach().cpu().permute(0, 2, 3, 1).numpy()
     images = (image * 255).round().astype("uint8")
     pil_images = [Image.fromarray(image) for image in images]
+    # pil_images[0].save(f'/tmp/stablediff/{idx}.jpeg')
+    outputPath = "" # change it to your output path, ensure you have write permission to it
+    pil_images[0].save(outputPath)
     pil_images[0]
