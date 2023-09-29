@@ -13,3 +13,5 @@ https://nn.labml.ai/diffusion/stable_diffusion/model/unet.html
 -----
 For user in China Mainland, the direct access to huggingface.co may be blocked no matter whether VPN applied. \
 A remedy towards this is to download the model to your local path, and change the arg named pretrained_model_name_or_path of function from_pretrained() to the very absolute path.
+
+For user on macOS, if you get TypeError: Got unsupported ScalarType BFloat16, try to add .to( torch.float ) after image.detach().
