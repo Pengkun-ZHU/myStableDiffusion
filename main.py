@@ -83,6 +83,7 @@ with torch.autocast( dev ):
         image = vae.decode( latentSpace )
 
     # Display
+    image = image.sample()
     image = (image / 2 + 0.5).clamp(0, 1)
     image = image.detach().cpu().permute(0, 2, 3, 1).numpy()
     images = (image * 255).round().astype("uint8")
