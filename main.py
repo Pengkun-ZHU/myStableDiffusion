@@ -35,7 +35,7 @@ textEncoder = textEncoder.to( dev )
 prompt = ["whatever"]   # Fill in your own prompt
 hImg = 512  # Image height
 wImg = 512  # Image width
-num_inference_steps = 50  # You may decrease it for quick result, especially during debug
+num_inference_steps = 50  # You may decrease it for quick result, especially during debug. However 25 
 guidance_scale = 7.5
 generator = torch.manual_seed( 42 )  # seed for generating random noise, it must be set for both training and eval mode, otherwise you get differernt noise each time
 batchSz = 1
@@ -43,14 +43,14 @@ batchSz = 1
 # Prep text
 text_input = textTokenizer( prompt, padding="max_length", max_length=textTokenizer.model_max_length, truncation=True, return_tensors="pt" )
 with torch.no_grad():
-  text_embeddings = textEncoder(text_input.input_ids.to( dev ))[0]
+  text_embeddings = textEncoder( text_input.input_ids.to( dev ) )[0]
 max_length = text_input.input_ids.shape[-1]
 uncond_input = textTokenizer(
     [""] * batchSz, padding="max_length", max_length=max_length, return_tensors="pt"
 )
 with torch.no_grad():
-  uncond_embeddings = textEncoder(uncond_input.input_ids.to( dev ))[0]
-text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
+  uncond_embeddings = textEncoder( uncond_input.input_ids.to( dev ) )[0]
+text_embeddings = torch.cat( [uncond_embeddings, text_embeddings] )
 
 # For following part, See https://huggingface.co/docs/diffusers/main/en/using-diffusers/write_own_pipeline
 scheduler.set_timesteps( num_inference_steps )
@@ -61,20 +61,20 @@ latentSpace = latentSpace * scheduler.sigmas[0]  # "Need to scale to match k", w
 with torch.autocast( dev ):
     for t in tqdm( scheduler.timesteps ):
         # expand the latents if we are doing classifier-free guidance to avoid doing two forward passes.
-        latent_model_input = torch.cat([latentSpace] * 2)
+        latent_model_input = torch.cat( [latentSpace] * 2 )
 
-        latent_model_input = scheduler.scale_model_input(latent_model_input, timestep=t)
+        latent_model_input = scheduler.scale_model_input( latent_model_input, timestep=t )
 
         # predict the noise residual
         with torch.no_grad():
-            noise_pred = unet(latent_model_input, t, encoder_hidden_states=text_embeddings)["sample"]
+            noise_pred = unet( latent_model_input, t, encoder_hidden_states=text_embeddings )["sample"]
 
         # perform guidance
         noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
-        noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
+        noise_pred = noise_pred_uncond + guidance_scale * ( noise_pred_text - noise_pred_uncond )
 
         # compute the previous noisy sample x_t -> x_t-1
-        latentSpace = scheduler.step(noise_pred, t, latentSpace).prev_sample
+        latentSpace = scheduler.step( noise_pred, t, latentSpace ).prev_sample
 
     # scale and decode the image latents with vae
     latentSpace = 1 / 0.18215 * latentSpace
@@ -84,11 +84,17 @@ with torch.autocast( dev ):
 
     # Display
     image = image.sample
-    image = (image / 2 + 0.5).clamp(0, 1)
-    image = image.detach().cpu().permute(0, 2, 3, 1).numpy()
-    images = (image * 255).round().astype("uint8")
+    image = ( image / 2 + 0.5 ).clamp( 0, 1 )
+    try:
+        image = image.detach().cpu().permute( 0, 2, 3, 1 ).numpy()
+    except TypeError as e:
+        if str( e ) == "typeError":
+            image = image.detach().to( torch.float ).cpu().permute( 0, 2, 3, 1 ).numpy()
+        else:
+            raise
+    images = (image * 255).round().astype( "uint8" )
     pil_images = [Image.fromarray(image) for image in images]
-    # pil_images[0].save(f'/tmp/stablediff/{idx}.jpeg')
+    # pil_images[0].save( f'/tmp/stablediff/{idx}.jpeg' )
     outputPath = "" # change it to your output path, ensure you have write permission to it
-    pil_images[0].save(outputPath)
+    pil_images[0].save( outputPath )
     pil_images[0]
