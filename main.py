@@ -16,7 +16,7 @@ dev = "cuda" if torch.cuda.is_available() else "cpu"
 vae = diffusers.AutoencoderKL.from_pretrained( "CompVis/stable-diffusion-v1-4", subfolder="vae" )
 
 # UNet for generating latent space
-unet = diffusers.UNet2DConditionModel.from_pretrained( "CompVis/stable-diffusion-v1-4", subfolder="vae" )
+unet = diffusers.UNet2DConditionModel.from_pretrained( "CompVis/stable-diffusion-v1-4", subfolder="unet" )
 
 # Scheduler guiding what step to take when adding noise. See the link below for details on each parameter
 # https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#quick-summary
