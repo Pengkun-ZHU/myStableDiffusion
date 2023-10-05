@@ -11,7 +11,7 @@ https://nn.labml.ai/diffusion/stable_diffusion/model/unet.html
 
 **Demo**
 "Chinese grandparents with their grandson, in cartoon style" \
-![2](https://github.com/Pengkun-ZHU/myStableDiffusion/assets/56779575/d04d0ad3-3c7d-4d49-9c8a-8798f64cfd63) \
+![2](https://github.com/Pengkun-ZHU/myStableDiffusion/assets/56779575/d04d0ad3-3c7d-4d49-9c8a-8798f64cfd63) 
 
 
 **Note**
