@@ -3,7 +3,7 @@
 Introducing a hands-on image generation by stable diffusion model!!!\
 Feel free to modify and try various prompts to guide your image generation, powered by openai's pretrained CLIP model clip-vit-large-patch14.\
 Compared with traditional diffusion model where noising and denoising is applied to all pixels, this very version applies only to latent space, hence much more efficient with arguably minor performance degradation. It takes astounishing 1 min to generate a 512x512 image with 50 iterations by CUDA on my RTX3060Ti.\
-Noteworthilly, runing on CPU or MacOS is supported but not encouraged. It takes roughly 5 hours on my 2021 Macbook pro to generate 512x512 image with 25 iterations... the heat is also unacceptable :(\
+Noteworthilly, runing on CPU or MacOS is supported but not encouraged. It takes roughly 5 hours on my 2021 Macbook pro to generate 512x512 image with 25 iterations... the heat is also unacceptable :(
 
 
 **Reference**
