@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) \
 Introducing a hands-on image generation by stable diffusion model!!!\
 Feel free to modify and try various prompts to guide your image generation, powered by openai's pretrained CLIP model clip-vit-large-patch14.\
-Compared with traditional diffusion model where noising and denoising is applied to all pixels, this very version applies only to latent space, hence much more efficient with arguably minor performance degradation.\
+Compared with traditional diffusion model where noising and denoising is applied to all pixels, this very version applies only to latent space, hence much more efficient with arguably minor performance degradation.
 
 
 **Reference**
